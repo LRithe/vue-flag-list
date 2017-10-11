@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import flagCode from './components/index'
 
 Vue.config.productionTip = false
 Vue.use(iView)
+Vue.use(flagCode)
 
 /* eslint-disable no-new */
 new Vue({

@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: 'flag',
+    name: 'flagCode',
     data: function () {
       return {
         flagInfo: [
