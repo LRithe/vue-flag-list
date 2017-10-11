@@ -5,17 +5,18 @@
                 <Icon :type="arrowType" size="18" color="#666"></Icon>
             </span>
             <div id="flag-value" :class="{showFlasList: !isShow}">
-                <p class="code">
-                    <input type="text">
-                </p>
                 <p class="flag-icon">
-                    <img src="../assets/logo.png" alt="">
+                    <i :style="flagIconStyle"></i>
+                </p>
+                <p class="code">
+                    <span>+</span>
+                    <input type="text" v-model="code">
                 </p>
             </div>
             <transition name="fade">
                 <ul id="flag-list" v-show="isShow">
-                    <li class="item" v-for="flag in flagInfo" data-domain="flag.domain" data-code="flag.code">
-                        <span>(+{{ flag.code }})</span> {{flag.name}}
+                    <li class="item" v-for="flag in flagInfo" :data-domain="flag.domain" :data-code="flag.code" @click="getCode(flag)">
+                        <i :style="{backgroundPosition: flag.x + 'px' + ' ' + flag.y + 'px'}"></i><span>(+{{ flag.code }})</span> {{flag.name}}
                     </li>
                 </ul>
             </transition>
@@ -238,8 +239,15 @@
           {name: 'Kalaallit Nunaat', domain: 'gl', code: '45', x: '-240', y: '-110'}
         ],
         arrowType: 'arrow-right-b',
-        isShow: false
+        isShow: false,
+        code: '',
+        flagIconStyle: {
+          backgroundPosition: 0 + ' ' + 0
+        }
       }
+    },
+    created () {
+      this.code = this.flagInfo[0].code
     },
     methods: {
       toggleFlagList () {
@@ -250,12 +258,17 @@
           this.arrowType = 'arrow-right-b'
           this.isShow = false
         }
+      },
+      getCode (value) {
+        this.code = value.code
+        this.flagIconStyle.backgroundPosition = value.x + 'px' + ' ' + value.y + 'px'
       }
     }
   }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+    $base-height: 35px;
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s
     }
@@ -263,38 +276,49 @@
         opacity: 0
     }
     #flag-box {
-        width: 100px;
+        max-width: 130px;
+        min-width: 100px;
         position: relative;
         margin: 10px auto;
     }
     #flag-value {
         width: 100%;
-        height: 40px;
+        height: $base-height;
         border: 1px solid #ccc;
         border-bottom: 0;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         outline: none;
-        p {
-            float: left;
-            width: 30px;
-            height: 22px;
-            img {
-                max-width: 100%;
-            }
-        }
         .code {
             float: left;
-            width: calc(100% - 50px);
+            width: calc(100% - 60px);
             height: inherit;
-            border-right: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            font-size: 14px;
             input {
                 background-color: transparent;
                 border: none;
                 outline: none;
-                width: 100%;
+                width: calc(100% - 20px);
                 height: inherit;
+                text-align: left;
             }
+            span {
+                display: inline-block;
+                width: 15px;
+                margin-right: -6px;
+            }
+        }
+    }
+
+    .flag-icon {
+        float: left;
+        padding: $base-height/2 - 12px 8px;
+        i {
+            display: inline-block;
+            width: 30px;
+            height: 22px;
+            background-image: url("../assets/img/flag.png");
         }
     }
 
@@ -304,18 +328,20 @@
     }
 
     .icon {
+        cursor: pointer;
         position: absolute;
-        right: 10px;
-        top: 10px;
+        right: 8px;
+        top: $base-height/2 - 9px;
     }
 
     #flag-list {
+        max-width: 280px;
         position: absolute;
         width: auto;
         text-align: left;
-        padding: 0 10px;
+        padding: 0 15px 0 10px;
         height: 300px;
-        overflow-y: scroll;
+        overflow: scroll;
         border: 1px solid #ccc;
         li {
             line-height: 2.3;
@@ -329,6 +355,7 @@
 
     ::-webkit-scrollbar {
         width:10px;
+        height: 10px;
     }
     /* 滚动槽 */
     ::-webkit-scrollbar-track {
@@ -343,5 +370,20 @@
     }
     ::-webkit-scrollbar-thumb:window-inactive {
         background: rgba(0, 0, 0, 0.4);
+    }
+
+    .item {
+        &:hover {
+            cursor: pointer;
+        }
+        padding: 5px 0;
+        i {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            width: 30px;
+            height: 22px;
+            background-image: url("../assets/img/flag.png");
+        }
     }
 </style>
