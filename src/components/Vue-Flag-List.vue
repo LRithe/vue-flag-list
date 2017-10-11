@@ -1,6 +1,24 @@
 <template>
-    <div id="vue-flag-list">
-        <div class="flag">
+    <div id="flag">
+        <div id="flag-box">
+            <span class='icon' @click="toggleFlagList">
+                <Icon :type="arrowType" size="18" color="#666"></Icon>
+            </span>
+            <div id="flag-value" :class="{showFlasList: !isShow}">
+                <p class="code">
+                    <input type="text">
+                </p>
+                <p class="flag-icon">
+                    <img src="../assets/logo.png" alt="">
+                </p>
+            </div>
+            <transition name="fade">
+                <ul id="flag-list" v-show="isShow">
+                    <li class="item" v-for="flag in flagInfo" data-domain="flag.domain" data-code="flag.code">
+                        <span>(+{{ flag.code }})</span> {{flag.name}}
+                    </li>
+                </ul>
+            </transition>
         </div>
     </div>
 </template>
@@ -218,17 +236,112 @@
           {name: 'Niue', domain: 'nu', code: '683', x: '-180', y: '-110'},
           {name: 'Pitcairn Islands', domain: 'pn', code: '64', x: '-210', y: '-110'},
           {name: 'Kalaallit Nunaat', domain: 'gl', code: '45', x: '-240', y: '-110'}
-        ]
+        ],
+        arrowType: 'arrow-right-b',
+        isShow: false
+      }
+    },
+    methods: {
+      toggleFlagList () {
+        if (this.arrowType === 'arrow-right-b') {
+          this.arrowType = 'arrow-down-b'
+          this.isShow = true
+        } else {
+          this.arrowType = 'arrow-right-b'
+          this.isShow = false
+        }
       }
     }
   }
 </script>
 
-<style rel="stylesheet/scss" scoped>
-    .select {
+<style rel="stylesheet/scss" lang="scss" scoped>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+        opacity: 0
+    }
+    #flag-box {
         width: 100px;
-        height: 50px;
-        border: 1px solid #888;
-        border-radius: 10px;
+        position: relative;
+        margin: 10px auto;
+    }
+    #flag-value {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        outline: none;
+        p {
+            float: left;
+            width: 30px;
+            height: 22px;
+            img {
+                max-width: 100%;
+            }
+        }
+        .code {
+            float: left;
+            width: calc(100% - 50px);
+            height: inherit;
+            border-right: 1px solid #ccc;
+            input {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                width: 100%;
+                height: inherit;
+            }
+        }
+    }
+
+    .showFlasList {
+        border-radius: 5px!important;
+        border-bottom: 1px solid #ccc!important;
+    }
+
+    .icon {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    #flag-list {
+        position: absolute;
+        width: auto;
+        text-align: left;
+        padding: 0 10px;
+        height: 300px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        li {
+            line-height: 2.3;
+            white-space: nowrap;
+            span {
+                color: #333;
+                font-weight: bold;
+            }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width:10px;
+    }
+    /* 滚动槽 */
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow:inset 0 0 1px rgba(0,0,0,0.3);
+        border-radius:5px;
+    }
+    /* 滚动条滑块 */
+    ::-webkit-scrollbar-thumb {
+        border-radius:5px;
+        background:rgba(0,0,0,0.1);
+        -webkit-box-shadow:inset 0 0 2px rgba(0,0,0,0.5);
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(0, 0, 0, 0.4);
     }
 </style>
