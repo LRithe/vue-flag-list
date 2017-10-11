@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueFlagList from '@/components/Vue-Flag-List.vue'
+import Index from '@/components/index.vue'
 
 Vue.use(Router)
 
@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'flag',
-      component: VueFlagList
+      name: 'index',
+      component: Index
     }
   ]
 })

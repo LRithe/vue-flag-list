@@ -1,8 +1,7 @@
 <template>
     <div id="flag">
         <div id="flag-box">
-            <span class='icon' @click="toggleFlagList">
-                <Icon :type="arrowType" size="18" color="#666"></Icon>
+            <span class='icon triangle' :class="{'triangle-down': isShow}" @click="toggleFlagList">
             </span>
             <div id="flag-value" :class="{showFlasList: !isShow}">
                 <p class="flag-icon">
@@ -268,19 +267,41 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+    div, p {
+        margin: 0;
+    }
+    .triangle {
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 8px solid #666;
+        cursor: pointer;
+    }
+
+    .triangle-down {
+        transform-origin: center center;
+        transform: rotate(90deg);
+        transition: all 100ms linear;
+    }
+
     $base-height: 35px;
+
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s
     }
-    .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+
+    .fade-enter, .fade-leave-to {
         opacity: 0
     }
+
     #flag-box {
         max-width: 130px;
         min-width: 100px;
         position: relative;
         margin: 10px auto;
     }
+
     #flag-value {
         width: 100%;
         height: $base-height;
@@ -289,37 +310,33 @@
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         outline: none;
-        .code {
-            float: left;
-            width: calc(100% - 60px);
-            height: inherit;
-            border-left: 1px solid #ccc;
-            font-size: 14px;
-            input {
-                background-color: transparent;
-                border: none;
-                outline: none;
-                width: calc(100% - 20px);
-                height: inherit;
-                text-align: left;
-            }
-            span {
-                display: inline-block;
-                width: 15px;
-                margin-right: -6px;
-            }
-        }
+    }
+
+    #flag-value .code {
+        float: left;
+        width: calc(100% - 60px);
+        height: inherit;
+        border-left: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    #flag-value .code input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        width: calc(100% - 20px);
+        height: inherit;
+        text-align: left;
+    }
+    #flag-value .code span {
+        display: inline-block;
+        width: 15px;
+        margin-right: -6px;
     }
 
     .flag-icon {
         float: left;
         padding: $base-height/2 - 12px 8px;
-        i {
-            display: inline-block;
-            width: 30px;
-            height: 22px;
-            background-image: url("../assets/img/flag.png");
-        }
     }
 
     .showFlasList {
@@ -327,11 +344,17 @@
         border-bottom: 1px solid #ccc!important;
     }
 
+    .flag-icon i {
+        display: inline-block;
+        width: 30px;
+        height: 22px;
+        background-image: url("../assets/img/flag.png");
+    }
+
     .icon {
-        cursor: pointer;
         position: absolute;
         right: 8px;
-        top: $base-height/2 - 9px;
+        top: $base-height/2 - 8px;
     }
 
     #flag-list {
@@ -343,14 +366,18 @@
         height: 300px;
         overflow: scroll;
         border: 1px solid #ccc;
-        li {
-            line-height: 2.3;
-            white-space: nowrap;
-            span {
-                color: #333;
-                font-weight: bold;
-            }
-        }
+        z-index: 9;
+        background-color: #fff;
+    }
+
+    #flag-list li {
+        line-height: 2.3;
+        white-space: nowrap;
+    }
+
+    #flag-list li span {
+        color: #333;
+        font-weight: bold;
     }
 
     ::-webkit-scrollbar {
@@ -373,17 +400,19 @@
     }
 
     .item {
-        &:hover {
-            cursor: pointer;
-        }
         padding: 5px 0;
-        i {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-            width: 30px;
-            height: 22px;
-            background-image: url("../assets/img/flag.png");
-        }
+    }
+
+    .item:hover {
+        cursor: pointer;
+    }
+
+    .item i {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        width: 30px;
+        height: 22px;
+        background-image: url("../assets/img/flag.png");
     }
 </style>
