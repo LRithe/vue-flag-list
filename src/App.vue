@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <flagCode></flagCode>
+    <!--<flagCode></flagCode>-->
     <router-view></router-view>
   </div>
 </template>

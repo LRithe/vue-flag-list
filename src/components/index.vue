@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    <flagCode></flagCode>
+    <flagCode height="30" width="120"></flagCode>
   </div>
 </template>
 

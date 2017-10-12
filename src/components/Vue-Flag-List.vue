@@ -1,15 +1,15 @@
 <template>
     <div id="flag">
-        <div id="flag-box">
-            <span class='icon triangle' :class="{'triangle-down': isShow}" @click="toggleFlagList">
+        <div id="flag-box" :style="{width: width + 'px',height: _height + 'px'}">
+            <span class='icon triangle' :style="{top: _height/2 - 5 + 'px'}" :class="{'triangle-down': isShow}" @click="toggleFlagList">
             </span>
             <div id="flag-value" :class="{showFlasList: !isShow}">
-                <p class="flag-icon">
+                <p class="flag-icon" :style="{padding: _height/2 - 8 + 'px' + ' ' + 5 + 'px'}">
                     <i :style="flagIconStyle"></i>
                 </p>
                 <p class="code">
-                    <span>+</span>
-                    <input type="text" v-model="code">
+                    <span :style="{fontSize: fontSize + 'px', lineHeight: _height + 'px'}">+</span>
+                    <input type="text" v-model="code" :style="{fontSize: fontSize + 'px'}">
                 </p>
             </div>
             <transition name="fade">
@@ -26,9 +26,229 @@
 <script>
   export default {
     name: 'flagCode',
+    props: {
+      height: {
+        type: String
+      },
+      width: {
+        type: String
+      },
+      fontSize: {
+        type: String
+      }
+    },
     data: function () {
       return {
         flagInfo: [
+          {name: '中国', domain: 'cn', code: '86', x: '0', y: '0'},
+          {name: '대한민국', domain: 'kr', code: '82', x: '-22', y: '0'},
+          {name: '조선민주주의인민공화국', domain: 'kp', code: '850', x: '-44', y: '0'},
+          {name: 'にっぽんこく、にほんこく', domain: 'jp', code: '81', x: '-66', y: '0'},
+          {name: 'Malaysia', domain: 'my', code: '60', x: '-88', y: '0'},
+          {name: 'भारत गणराज्य', domain: 'in', code: '91', x: '-110', y: '0'},
+          {name: 'اسلامی جمہوریہ پاکستان‎', domain: 'pk', code: '92', x: '-132', y: '0'},
+          {name: 'ราชอาณาจักรไทย', domain: 'th', code: '66', x: '-154', y: '0'},
+          {name: 'Cộng hòa Xã hội Chủ nghĩa Việt Nam', domain: 'vn', code: '84', x: '-176', y: '0'},
+          {name: 'The Democratic Socialist Republic of Sri Lanka', domain: 'lk', code: '0094', x: '-198', y: '0'},
+          {name: 'the Republic of the Union of Myanmar', domain: 'mm', code: '95', x: '-220', y: '0'},
+          {name: 'Gônôprôjatôntri Bangladesh', domain: 'bd', code: '880', x: '-242', y: '0'},
+          {name: 'Kingdom of Bhutan', domain: 'bt', code: '975', x: '-264', y: '0'},
+          {name: 'جمهوری اسلامی افغانستان‎', domain: 'af', code: '93', x: '-286', y: '0'},
+          {name: 'the Kingdom of Cambodia', domain: 'kh', code: '855', x: '-308', y: '0'},
+          {name: 'Federal Democratic Republic of Nepal', domain: 'np', code: '977', x: '-242', y: '0'},
+          {name: 'ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ', domain: 'la', code: '856', x: '-352', y: '0'},
+          {name: '(دولة إِسْرَائِيل)מְדִינַת יִשְׂרָאֵל', domain: 'il', code: '00972', x: '-374', y: '0'},
+          {name: 'الجمهورية اليمنية', domain: 'ye', code: '967', x: '-396', y: '0'},
+          {name: 'Republika ng Pilipinas', domain: 'ph', code: '63', x: '-418', y: '0'},
+          {name: 'Republic of Singapore', domain: 'sg', code: '65', x: '-440', y: '0'},
+          {name: 'The Republic of Maldives', domain: 'mv', code: '960', x: '-464', y: '0'},
+          {name: 'Negara Brunei Darussalam', domain: 'bn', code: '673', x: '-484', y: '0'},
+          {name: 'Democratic Republic of Timor-Leste', domain: 'tl', code: '670', x: '-506', y: '0'},
+          {name: 'Republik Indonesia', domain: 'id', code: '62', x: '-528', y: '0'},
+          {name: 'الجمهورية العراقية', domain: 'iq', code: '964', x: '-550', y: '0'},
+          {name: 'جمهوری اسلامی ایران', domain: 'ir', code: '98', x: '-572', y: '0'},
+          {name: 'المملكة الأردنّيّة الهاشميّة', domain: 'jo', code: '962', x: '-594', y: '0'},
+          {name: 'مملكة عربية سعودية', domain: 'sa', code: '966', x: '-616', y: '0'},
+          {name: 'امارات عربية متحدة‎', domain: 'ae', code: '971', x: '-638', y: '0'},
+          {name: 'سلطنة عُمان', domain: 'om', code: '968', x: '-484', y: '0'},
+          {name: 'دولة الكويت‎', domain: 'kw', code: '965', x: '-682', y: '0'},
+          {name: 'The Kingdom of Bahrain', domain: 'bh', code: '973', x: '-704', y: '0'},
+          {name: 'الجمهوريّة العربيّة السّوريّة', domain: 'sy', code: '963', x: '-726', y: '0'},
+          {name: 'فلسطين', domain: 'ps', code: '970', x: '-748', y: '0'},
+          {name: 'قطر‎', domain: 'qa', code: '974', x: '-770', y: '0'},
+          {name: 'الجمهورية اللبنانية', domain: 'lb', code: '961', x: '-792', y: '0'},
+          {name: 'Монголулс', domain: 'mn', code: '976', x: '-814', y: '0'},
+          {name: 'Türkiye Cumhuriyeti', domain: 'tr', code: '90', x: '-836', y: '0'},
+          {name: 'Қазақстан Республикасы', domain: 'kz', code: '7', x: '-858', y: '0'},
+          {name: 'Oʻzbekiston Respublikasi', domain: 'uz', code: '998', x: '0', y: '-16'},
+          {name: 'Кыргыз Республикасы,', domain: 'kg', code: '996', x: '-22', y: '-16'},
+          {name: 'ҶумҳурииТоҷикистон', domain: 'tj', code: '992', x: '-44', y: '-16'},
+          {name: 'Түркменистан', domain: 'tm', code: '993', x: '-66', y: '-16'},
+          {name: 'Azərbaycan Respublikası', domain: 'az', code: '994', x: '-88', y: '-16'},
+          {name: 'საქართველო', domain: 'ge', code: '995', x: '-110', y: '-16'},
+          {name: 'Հայաստանի Հանրապետություն', domain: 'am', code: '374', x: '-132', y: '-16'},
+          {name: 'Κύπρος', domain: 'cy', code: '357', x: '-154', y: '-16'},
+          {name: 'República de Angola', domain: 'ao', code: '244', x: '-176', y: '-16'},
+          {name: 'The Federal Democratic Republic of Ethiopia', domain: 'et', code: '251', x: '-198', y: '-16'},
+          {name: 'جمهوريّة مصرالعربيّة', domain: 'eg', code: '20', x: '-220', y: '-16'},
+          {name: 'La République Centrafricaine', domain: 'cf', code: '236', x: '-242', y: '-16'},
+          {name: 'The Republic of Guinea', domain: 'gn', code: '00224', x: '-264', y: '-16'},
+          {name: 'República da Guiné-Bissau', domain: 'gw', code: '245', x: '-286', y: '-16'},
+          {name: 'Botswana', domain: 'bw', code: '267', x: '-308', y: '-16'},
+          {name: 'Burkina Faso', domain: 'bf', code: '226', x: '-330', y: '-16'},
+          {name: 'The Republic of Madagascar', domain: 'mg', code: '261', x: '-352', y: '-16'},
+          {name: 'République du Mali', domain: 'ml', code: '223', x: '-374', y: '-16'},
+          {name: 'Dziko la Malaŵi', domain: 'mw', code: '265', x: '-396', y: '-16'},
+          {name: 'République démocratique du Congo', domain: 'cd', code: '243', x: '-418', y: '-16'},
+          {name: 'República de Guinea Ecuatorial', domain: 'gq', code: '240', x: '-440', y: '-16'},
+          {name: 'Republic of The Gambia', domain: 'gm', code: '220', x: '-462', y: '-16'},
+          {name: 'República Popular do Benin', domain: 'bj', code: '229', x: '-484', y: '-16'},
+          {name: 'The Republic of Mauritius', domain: 'mu', code: '230', x: '-506', y: '-16'},
+          {name: 'The Islamic Republic of Mauritania', domain: 'mr', code: '222', x: '-528', y: '-16'},
+          {name: 'The Republic of Uganda', domain: 'ug', code: '256', x: '-550', y: '-16'},
+          {name: 'Republic of Seychelles', domain: 'sc', code: '248', x: '-572', y: '-16'},
+          {name: 'The Republic of Sierra Leone', domain: 'sl', code: '232', x: '-594', y: '-16'},
+          {name: 'المملكة المغربية‎', domain: 'ma', code: '212', x: '-616', y: '-16'},
+          {name: 'The Republic of Burundi', domain: 'bi', code: '257', x: '-638', y: '-16'},
+          {name: "Republika y'u Rwanda", domain: 'rw', code: '250', x: '-660', y: '-16'},
+          {name: 'Republic of Chad', domain: 'td', code: '235', x: '-682', y: '-16'},
+          {name: 'The Republic of Niger', domain: 'ne', code: '227', x: '-704', y: '-16'},
+          {name: 'Federal Republic of Nigeria', domain: 'ng', code: '234', x: '-726', y: '-16'},
+          {name: 'The Republic of Ghana', domain: 'gh', code: '233', x: '-748', y: '-16'},
+          {name: 'République gabonaise', domain: 'ga', code: '241', x: '-770', y: '-16'},
+          {name: 'República Democrática de São Tomé e Príncipe', domain: 'st', code: '239', x: '-792', y: '-16'},
+          {name: 'جمهوريه جيبوتي‎', domain: 'cj', code: '253', x: '-814', y: '-16'},
+          {name: 'République du Congo', domain: 'cg', code: '242', x: '-836', y: '-16'},
+          {name: 'République Togolaise', domain: 'tg', code: '228', x: '-858', y: '-16'},
+          {name: 'جمهورية السودان‎', domain: 'sd', code: '249', x: '0', y: '-32'},
+          {name: 'دولة ليبيا‎‎', domain: 'ly', code: '218', x: '-22', y: '-32'},
+          {name: 'Republic of Liberia', domain: 'lr', code: '231', x: '-44', y: '-32'},
+          {name: 'República de Cabo Verde', domain: 'cv', code: '238', x: '-66', y: '-32'},
+          {name: 'الجزائر‎ al-Jazāʼir', domain: 'dz', code: '213', x: '-88', y: '-32'},
+          {name: 'The Republic of Namibia', domain: 'na', code: '264', x: '-110', y: '-32'},
+          {name: 'The State of Eritrea', domain: 'er', code: '291', x: '-132', y: '-32'},
+          {name: 'The Kingdom of Swaziland', domain: 'sz', code: '268', x: '-154', y: '-32'},
+          {name: 'The Republic of Zambia', domain: 'zm', code: '260', x: '-176', y: '-32'},
+          {name: 'The United Republic of Tanzania', domain: 'tz', code: '255', x: '-198', y: '-32'},
+          {name: 'The Republic of Kenya', domain: 'ke', code: '254', x: '-220', y: '-32'},
+          {name: 'The Republic of South Africa', domain: 'za', code: '27', x: '-242', y: '-32'},
+          {name: 'الاتّحاد القمريّ‎', domain: 'cmr', code: '269', x: '-264', y: '-32'},
+          {name: 'Republic of Zimbabwe', domain: 'zw', code: '263', x: '-286', y: '-32'},
+          {name: 'الجمهورية التونسية‎', domain: 'tn', code: '216', x: '-308', y: '-32'},
+          {name: 'Mmuso wa Lesotho', domain: 'ls', code: '266', x: '-330', y: '-32'},
+          {name: 'República de Moçambique', domain: 'mz', code: '258', x: '-352', y: '-32'},
+          {name: 'Jamhuuriyadda Federaalka Soomaaliya', domain: 'so', code: '252', x: '-374', y: '-32'},
+          {name: "Coate d'Ivoire", domain: 'kt', code: '00225', x: '-396', y: '-32'},
+          {name: 'République du Cameroun', domain: 'cm', code: '237', x: '-418', y: '-32'},
+          {name: 'the Republic of Senegal', domain: 'sn', code: '221', x: '-440', y: '-32'},
+          {name: 'The Republic of South Sudan', domain: 'ss', code: '211', x: '-462', y: '-32'},
+          {name: 'United Kingdom', domain: 'uk', code: '44', x: '-484', y: '-32'},
+          {name: 'România', domain: 'ro', code: '40', x: '-506', y: '-32'},
+          {name: 'République française', domain: 'fr', code: '33', x: '-528', y: '-32'},
+          {name: 'Rzeczpospolita Polska', domain: 'pl', code: '48', x: '-550', y: '-32'},
+          {name: 'Confédération suisse', domain: 'ch', code: '41', x: '-572', y: '-32'},
+          {name: 'Konungariket Sverige', domain: 'se', code: '46', x: '-594', y: '-32'},
+          {name: 'Repubblica Italiana', domain: 'it', code: '39', x: '-616', y: '-32'},
+          {name: 'Bundesrepublik Deutschland', domain: 'de', code: '49', x: '-638', y: '-32'},
+          {name: 'Principauté de Monaco', domain: 'mc', code: '377', x: '-660', y: '-32'},
+          {name: 'Latvijas Republika', domain: 'lv', code: '371', x: '-682', y: '-32'},
+          {name: 'Ελληνική Δημοκρατία', domain: 'gr', code: '30', x: '-704', y: '-32'},
+          {name: 'Republika e Shqipërisë', domain: 'al', code: '355', x: '-726', y: '-32'},
+          {name: 'Kongeriket Norge', domain: 'no', code: '47', x: '-748', y: '-32'},
+          {name: 'Република Србија', domain: 'rs(yu)', code: '381', x: '-770', y: '-32'},
+          {name: 'Народна република България', domain: 'bg', code: '359', x: '-792', y: '-32'},
+          {name: 'Eesti Vabariik', domain: 'ee', code: '372', x: '-1110', y: '-32'},
+          {name: 'Lietuvos Respublika', domain: 'lt', code: '370', x: '-836', y: '-32'},
+          {name: 'Koninkrijk der Nederlanden', domain: 'nl', code: '31', x: '-858', y: '-32'},
+          {name: 'Poblacht na hÉireann', domain: 'ie', code: '353', x: '0', y: '-48'},
+          {name: 'Česká republika', domain: 'cz', code: '420', x: '-22', y: '-48'},
+          {name: 'Slovenská republika', domain: 'sk', code: '421', x: '-44', y: '-48'},
+          {name: 'República Portuguesa', domain: 'pt', code: '351', x: '-66', y: '-48'},
+          {name: 'Republika Slovenija', domain: 'si', code: '386', x: '-88', y: '-48'},
+          {name: 'Република Македонија', domain: 'mk', code: '389', x: '-110', y: '-48'},
+          {name: 'Hrvatska', domain: 'hr', code: '385', x: '-132', y: '-48'},
+          {name: 'Status Civitatis Vaticanae', domain: 'va', code: '379', x: '-154', y: '-48'},
+          {name: 'België', domain: 'be', code: '32', x: '-176', y: '-48'},
+          {name: "Repubblika ta' Malta", domain: 'mt', code: '356', x: '-198', y: '-48'},
+          {name: 'Kongeriget Danmark', domain: 'dk', code: '45', x: '-220', y: '-48'},
+          {name: 'Groussherzogtum Lëtzebuerg', domain: 'lu', code: '352', x: '-242', y: '-48'},
+          {name: 'Bosnia and Herzegovina', domain: 'ba', code: '387', x: '-264', y: '-48'},
+          {name: 'Reino de España', domain: 'es', code: '34', x: '-286', y: '-48'},
+          {name: 'Repubblica di San Marino', domain: 'sm', code: '378', x: '-308', y: '-48'},
+          {name: 'Magyarország', domain: 'hu', code: '36', x: '-330', y: '-48'},
+          {name: 'Fürstentum Liechtenstein', domain: 'li', code: '423', x: '-352', y: '-48'},
+          {name: 'Lýðveldið Ísland', domain: 'is', code: '354', x: '-374', y: '-48'},
+          {name: "Principat d'Andorra", domain: 'ad', code: '376', x: '-396', y: '-48'},
+          {name: 'Suomen tasavalta', domain: 'fi', code: '358', x: '-418', y: '-48'},
+          {name: 'Российская Федерация', domain: 'ru', code: '7', x: '-440', y: '-48'},
+          {name: 'Republik Österreich', domain: 'at', code: '43', x: '-462', y: '-48'},
+          {name: 'УКРАЇНА', domain: 'ua', code: '380', x: '-484', y: '-48'},
+          {name: 'Рэспубліка Беларусь', domain: 'by', code: '375', x: '-506', y: '-48'},
+          {name: 'Republica Moldova', domain: 'md', code: '373', x: '-528', y: '-48'},
+          {name: 'The Republic of Montenegro', domain: 'me', code: '382', x: '-550', y: '-48'},
+          {name: 'United States of America', domain: 'us', code: '1', x: '-572', y: '-48'},
+          {name: 'Canada', domain: 'ca', code: '1', x: '-594', y: '-48'},
+          {name: 'Peru', domain: 'pe', code: '51', x: '-616', y: '-48'},
+          {name: 'Repiblik Ayiti', domain: 'ht', code: '509', x: '-638', y: '-48'},
+          {name: 'República de El Salvador', domain: 'sv', code: '503', x: '-660', y: '-48'},
+          {name: 'República de Chile', domain: 'cl', code: '56', x: '-682', y: '-48'},
+          {name: 'La República de Cuba', domain: 'cu', code: '53', x: '-704', y: '-48'},
+          {name: 'The Republic of Nicaragua', domain: 'ni', code: '505', x: '-726', y: '-48'},
+          {name: 'Commonwealth of the Bahamas', domain: 'bs', code: '242', x: '-748', y: '-48'},
+          {name: 'La República de Panamá', domain: 'pa', code: '507', x: '-770', y: '-48'},
+          {name: 'Estado Plurinacional de Bolivia', domain: 'bol', code: '591', x: '-792', y: '-48'},
+          {name: 'Grenada', domain: 'gd', code: '1473', x: '-1110', y: '-48'},
+          {name: 'República del Paraguay', domain: 'py', code: '595', x: '-836', y: '-48'},
+          {name: 'República Federativa do Brasil', domain: 'br', code: '268', x: '-858', y: '-48'},
+          {name: 'República de Honduras', domain: 'hn', code: '504', x: '0', y: '-64'},
+          {name: 'República del Ecuador', domain: 'ec', code: '593', x: '-22', y: '-64'},
+          {name: 'Jamaica', domain: 'jm', code: '876', x: '-44', y: '-64'},
+          {name: 'República Oriental del Uruguay', domain: 'uy', code: '598', x: '-66', y: '-64'},
+          {name: 'Barbados', domain: 'bb', code: '268', x: '-88', y: '-64'},
+          {name: 'Saint Lucia', domain: 'lc', code: '1-758', x: '-110', y: '-64'},
+          {name: 'Cooperative Republic of Guyana', domain: 'gy', code: '592', x: '-132', y: '-64'},
+          {name: 'República de Guatemala', domain: 'gt', code: '502', x: '-154', y: '-64'},
+          {name: 'La República Dominicana', domain: 'do', code: '1849', x: '-176', y: '-64'},
+          {name: 'Los Estados Unidos Mexicanos', domain: 'mx', code: '52', x: '-198', y: '-64'},
+          {name: 'The Commonwealth of Dominica', domain: 'dm', code: '1767', x: '-220', y: '-64'},
+          {name: 'República Argentina', domain: 'ar', code: '54', x: '-242', y: '-64'},
+          {name: 'República Bolivariana de Venezuela', domain: 've', code: '58', x: '-264', y: '-64'},
+          {name: 'República de Colombia', domain: 'co', code: '57', x: '-286', y: '-64'},
+          {name: 'Antigua and Barbuda', domain: 'ag', code: '268', x: '-308', y: '-64'},
+          {name: 'Republiek Suriname', domain: 'sr', code: '597', x: '-330', y: '-64'},
+          {name: 'Belize', domain: 'bz', code: '501', x: '-352', y: '-64'},
+          {name: 'La República de Costa Rica', domain: 'cr', code: '506', x: '-374', y: '-64'},
+          {name: 'Republic of Trinidad and Tobago', domain: 'tt', code: '1-868', x: '-396', y: '-64'},
+          {name: 'The Commonwealth of Australia', domain: 'au', code: '61', x: '-418', y: '-64'},
+          {name: 'New Zealand', domain: 'nz', code: '64', x: '-440', y: '-64'},
+          {name: 'Matanitu Tugalala o Viti', domain: 'fj', code: '679', x: '-462', y: '-64'},
+          {name: 'The Kingdom of Tonga', domain: 'to', code: '675', x: '-484', y: '-64'},
+          {name: 'Independent State of Papua New Guinea', domain: 'pg', code: '675', x: '-506', y: '-64'},
+          {name: 'Tuvalu', domain: 'tv', code: '688', x: '-528', y: '-64'},
+          {name: 'Solomon Islands', domain: 'sb', code: '677', x: '-550', y: '-64'},
+          {name: 'Ripublik Naoero', domain: 'nr', code: '674', x: '-572', y: '-64'},
+          {name: 'The Republic of Kiribati', domain: 'kir', code: '686', x: '-594', y: '-64'},
+          {name: 'The Republic of Marshall Island', domain: 'mh', code: '692', x: '-616', y: '-64'},
+          {name: 'The Republic of Palau', domain: 'pw', code: '680', x: '-638', y: '-64'},
+          {name: 'Federated States of Micronesia', domain: 'fm', code: '691', x: '-660', y: '-64'},
+          {name: 'Republic of Vanuatu', domain: 'vu', code: '678', x: '-682', y: '-64'},
+          {name: 'The Independent State of Samoa', domain: 'ws', code: '685', x: '-704', y: '-64'},
+          {name: 'The Cook Islands', domain: 'ck', code: '682', x: '-726', y: '-64'},
+          {name: 'French Polynesia', domain: 'pf', code: '689', x: '-748', y: '-64'},
+          {name: 'Bermuda', domain: 'bm', code: '441', x: '-770', y: '-64'},
+          {name: 'The United States Virgin Islands', domain: 'us', code: '1', x: '-792', y: '-64'},
+          {name: 'American Samoa', domain: 'as', code: '001684', x: '-858', y: '-64'},
+          {name: 'Guyane française', domain: 'gf', code: '594', x: '0', y: '-80'},
+          {name: 'The Territory of Guahan', domain: 'gu', code: '1-671', x: '-22', y: '-80'},
+          {name: 'Cayman Islands', domain: 'cym', code: '1-345', x: '-44', y: '-80'},
+          {name: 'The British Virgin Islands', domain: 'vg', code: '1', x: '-66', y: '-80'},
+          {name: 'Aruba', domain: 'aw', code: '297', x: '-88', y: '-80'},
+          {name: 'Nouvelle-Calédonie', domain: 'nc', code: '687', x: '-110', y: '-80'},
+          {name: 'Niue', domain: 'nu', code: '683', x: '-132', y: '-80'},
+          {name: 'Pitcairn Islands', domain: 'pn', code: '64', x: '-154', y: '-80'},
+          {name: 'Kalaallit Nunaat', domain: 'gl', code: '45', x: '-176', y: '-80'}
+        ],
+        flagInfo30: [
           {name: '中国', domain: 'cn', code: '86', x: '0', y: '0'},
           {name: '대한민국', domain: 'kr', code: '82', x: '-30', y: '0'},
           {name: '조선민주주의인민공화국', domain: 'kp', code: '850', x: '-60', y: '0'},
@@ -242,10 +462,16 @@
         code: '',
         flagIconStyle: {
           backgroundPosition: 0 + ' ' + 0
-        }
+        },
+        _height: 0
       }
     },
     created () {
+      if (this.height < 24) {
+        this._height = 24
+      } else {
+        this._height = parseInt(this.height)
+      }
       this.code = this.flagInfo[0].code
     },
     methods: {
@@ -267,15 +493,15 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-    div, p {
+    div, p, ul {
         margin: 0;
     }
     .triangle {
         width: 0;
         height: 0;
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-left: 8px solid #666;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 6px solid #888;
         cursor: pointer;
     }
 
@@ -284,8 +510,6 @@
         transform: rotate(90deg);
         transition: all 100ms linear;
     }
-
-    $base-height: 35px;
 
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s
@@ -296,20 +520,19 @@
     }
 
     #flag-box {
-        max-width: 130px;
-        min-width: 100px;
+        min-width: 125px;
         position: relative;
         margin: 10px auto;
     }
 
     #flag-value {
         width: 100%;
-        height: $base-height;
         border: 1px solid #ccc;
         border-bottom: 0;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         outline: none;
+        height: inherit;
     }
 
     #flag-value .code {
@@ -317,15 +540,14 @@
         width: calc(100% - 60px);
         height: inherit;
         border-left: 1px solid #ccc;
-        font-size: 14px;
+        font-size: 15px;
     }
 
     #flag-value .code input {
         background-color: transparent;
         border: none;
         outline: none;
-        width: calc(100% - 20px);
-        height: inherit;
+        width: calc(100% - 25px);
         text-align: left;
     }
     #flag-value .code span {
@@ -336,7 +558,6 @@
 
     .flag-icon {
         float: left;
-        padding: $base-height/2 - 12px 8px;
     }
 
     .showFlasList {
@@ -346,15 +567,14 @@
 
     .flag-icon i {
         display: inline-block;
-        width: 30px;
-        height: 22px;
-        background-image: url("../assets/img/flag.png");
+        width: 22px;
+        height: 16px;
+        background-image: url("../assets/img/flag_22_16.png");
     }
 
     .icon {
         position: absolute;
         right: 8px;
-        top: $base-height/2 - 8px;
     }
 
     #flag-list {
@@ -371,8 +591,10 @@
     }
 
     #flag-list li {
-        line-height: 2.3;
+        line-height: 1.5;
         white-space: nowrap;
+        list-style: none;
+        font-size: 12px;
     }
 
     #flag-list li span {
@@ -411,8 +633,8 @@
         display: inline-block;
         vertical-align: middle;
         margin-right: 10px;
-        width: 30px;
-        height: 22px;
-        background-image: url("../assets/img/flag.png");
+        width: 22px;
+        height: 16px;
+        background-image: url("../assets/img/flag_22_16.png");
     }
 </style>
