@@ -494,10 +494,10 @@
         this.$emit('getCode', this.code)
       },
       getFlagIcon () {
+        this.$emit('getCode', this.code)
         for (let i in this.flagInfo) {
           this.flagIconStyle.backgroundPosition = '-900px 0px'
           if (this.flagInfo[i].code === this.code) {
-            this.$emit('getCode', this.code)
             this.flagIconStyle.backgroundPosition = this.flagInfo[i].x + 'px ' + this.flagInfo[i].y + 'px'
             return
           }
