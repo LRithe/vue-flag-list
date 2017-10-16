@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "guimin <guimin@shoplex.com>",
-  "private": true,
+  "private": false,
+  "main": "dist/vue-flag-list.min.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

@@ -1,17 +1,13 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
-import router from './router'
-import flagCode from './components/index'
+/**
+ * Created by lin on 2017/10/11.
+ */
 
-Vue.config.productionTip = false
-Vue.use(flagCode)
+import flagComponent from './Vue-Flag-List.vue'
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
-})
+const VueFlagList = {
+  install: function (Vue) {
+    Vue.component('flagCode', flagComponent)
+  }
+}
+
+export default VueFlagList
