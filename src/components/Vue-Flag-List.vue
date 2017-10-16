@@ -9,12 +9,12 @@
                 </p>
                 <p class="code">
                     <span :style="{fontSize: fontSize + 'px', lineHeight: _height + 'px'}">+</span>
-                    <input type="text" v-model="code" :style="{fontSize: fontSize + 'px'}">
+                    <input type="text" v-model="code" :style="{fontSize: fontSize + 'px'}" @keyup="getFlagIcon">
                 </p>
             </div>
             <transition name="fade">
                 <ul id="flag-list" v-show="isShow">
-                    <li class="item" v-for="flag in flagInfo" :data-domain="flag.domain" :data-code="flag.code" @click="getCode(flag)">
+                    <li class="item" v-for="flag in flagInfo" :data-domain="flag.domain" :data-code="flag.code" @click="getFlagCode(flag)">
                         <i :style="{backgroundPosition: flag.x + 'px' + ' ' + flag.y + 'px'}"></i><span>(+{{ flag.code }})</span> {{flag.name}}
                     </li>
                 </ul>
@@ -474,6 +474,9 @@
       }
       this.code = this.flagInfo[0].code
     },
+    mounted () {
+      this.$emit('getCode', this.code)
+    },
     methods: {
       toggleFlagList () {
         if (this.arrowType === 'arrow-right-b') {
@@ -484,9 +487,21 @@
           this.isShow = false
         }
       },
-      getCode (value) {
+      getFlagCode (value) {
         this.code = value.code
-        this.flagIconStyle.backgroundPosition = value.x + 'px' + ' ' + value.y + 'px'
+        this.flagIconStyle.backgroundPosition = value.x + 'px ' + value.y + 'px'
+        this.isShow = false
+        this.$emit('getCode', this.code)
+      },
+      getFlagIcon () {
+        for (let i in this.flagInfo) {
+          this.flagIconStyle.backgroundPosition = '-900px 0px'
+          if (this.flagInfo[i].code === this.code) {
+            this.$emit('getCode', this.code)
+            this.flagIconStyle.backgroundPosition = this.flagInfo[i].x + 'px ' + this.flagInfo[i].y + 'px'
+            return
+          }
+        }
       }
     }
   }
