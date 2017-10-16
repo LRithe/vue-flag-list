@@ -507,7 +507,7 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
     div, p, ul {
         margin: 0;
     }
