@@ -26,7 +26,16 @@ var webpackConfig = merge(baseWebpackConfig, {
     publicPath: config.bundle.assetsPublicPath,
     filename: 'vue-flag-list.min.js',
     library: 'VueFlagList',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    umdNamedDefine: true
+  },
+  externals: {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue'
+    }
   },
   // output: {
   //   path: config.build.assetsRoot,

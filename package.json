@@ -1,6 +1,6 @@
 {
   "name": "vue-flag-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Vue.js project",
   "author": "guimin <guimin@shoplex.com>",
   "private": false,
@@ -14,9 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/e2e/specs"
   },
   "dependencies": {
-    "iview": "^2.4.0",
-    "vue": "^2.3.3",
-    "vue-router": "^2.3.1"
+    "vue": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
