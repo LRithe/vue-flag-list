@@ -584,7 +584,7 @@
         display: inline-block;
         width: 22px;
         height: 16px;
-        background-image: url("../assets/img/flag_22_16.png");
+        background-image: url("./assets/img/flag_22_16.png");
     }
 
     .icon {
@@ -650,6 +650,6 @@
         margin-right: 10px;
         width: 22px;
         height: 16px;
-        background-image: url("../assets/img/flag_22_16.png");
+        background-image: url("./assets/img/flag_22_16.png");
     }
 </style>
