@@ -16,7 +16,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: '#source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/',
+    publicPath: '',
     filename: 'vue-flag-list.min.js',
     library: 'VueFlagList',
     libraryTarget: 'umd',

@@ -6,7 +6,10 @@ import flagComponent from './Vue-Flag-List.vue'
 
 const VueFlagList = {
   install: function (Vue) {
-    Vue.component('flagCode', flagComponent)
+    if (typeof window !== 'undefined' && window.Vue) {
+      Vue = window.Vue
+    }
+    Vue.component('VueFlagList', flagComponent)
   }
 }
 

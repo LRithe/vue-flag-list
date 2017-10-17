@@ -1,6 +1,6 @@
 {
   "name": "vue-flag-list",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A vue plugin for entering and selecting area code",
   "author": "guimin <guimin@shoplex.com>",
   "private": false,
